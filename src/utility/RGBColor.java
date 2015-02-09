@@ -27,8 +27,48 @@ public class RGBColor {
         this.b = _b;
     }
     
+    public RGBColor add(RGBColor c) {
+        RGBColor temp = new RGBColor();
+        temp.r = r + c.r;
+        temp.g = g + c.g;
+        temp.b = b + c.b;
+        return temp;
+    }
     
+    public RGBColor mult(float a) {
+        RGBColor temp = new RGBColor();
+        temp.r = r * a;
+        temp.g = g * a;
+        temp.b = b * a;
+        return temp;
+    }
     
+    public RGBColor div(float a) {
+        RGBColor temp = new RGBColor();
+        temp.r = r / a;
+        temp.g = g / a;
+        temp.b = b / a;
+        return temp;
+    }
     
+    public RGBColor mult(RGBColor c) {
+        RGBColor temp = new RGBColor();
+        temp.r = r * c.r;
+        temp.g = g * c.g;
+        temp.b = b * c.b;
+        return temp;
+    }
+    
+    public RGBColor powc(float p) {
+        RGBColor temp = new RGBColor();
+        temp.r = (float) Math.pow(r, p);
+        temp.g = (float) Math.pow(g, p);
+        temp.b = (float) Math.pow(b, p);
+        return temp;
+    }
+    
+    public float average() {
+        return (0.3333333333f * (r + g + b));
+    }
     
 }
