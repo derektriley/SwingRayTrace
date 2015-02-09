@@ -52,13 +52,12 @@ public class World {
         for (int r  = 0; r < vres; r++) {
             for (int c = 0; c <= hres; c++) {
                 ray.o = new Point3D(s * (c - hres / 2.0f + 0.5f), s * (r- vres / 2.0f + 0.5), zw);
-                
+                pixel_color = tracer.trace_ray(ray);
+                display_pixel(r, c, pixel_color);
             }
         }
-        
-        
     }
- 
+        
     public void render_scene(int start_x, int start_y) {
         
     }
