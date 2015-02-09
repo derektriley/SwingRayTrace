@@ -6,9 +6,14 @@
 package ui;
 
 import com.sun.prism.paint.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utility.RenderManager;
+import utility.RenderThread;
 
 /**
  *
@@ -16,11 +21,16 @@ import java.awt.image.BufferedImage;
  */
 public class UserInterface extends javax.swing.JFrame {
 
+    public static final int IMAGE_WIDTH = 400;
+    public static final int IMAGE_HEIGHT = 400;
+    
+    
     /**
      * Creates new form UserInterface
      */
     public UserInterface() {
         initComponents();
+        //Set prefered size for JScrollPane containing RenderPanel
     }
 
     /**
@@ -33,7 +43,7 @@ public class UserInterface extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        drawPanel = new javax.swing.JPanel();
+        drawPanel = new ui.RenderPanel(UserInterface.IMAGE_WIDTH, UserInterface.IMAGE_HEIGHT);
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         statusLabel = new javax.swing.JLabel();
@@ -154,17 +164,9 @@ public class UserInterface extends javax.swing.JFrame {
 
     private void startRenderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startRenderMenuItemActionPerformed
         
-        Graphics g = drawPanel.getGraphics();
-        BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < 200; i++) {
-            for (int j = 0; j < 200; j++) {
-                image.setRGB(0, 0, Color.RED.getIntArgbPre());
-            }
-        }
-        
-        g.drawImage(image, image.getHeight(), image.getWidth(), this);
-        System.out.println("Test");
-        drawPanel.repaint();
+        Thread t0 = new Thread( new RenderManager(drawPanel, renderTimeLabel));
+        t0.start();
+        System.out.println("Rendering");
     }//GEN-LAST:event_startRenderMenuItemActionPerformed
 
     /**
@@ -203,7 +205,10 @@ public class UserInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /*
     private javax.swing.JPanel drawPanel;
+    */
+    private ui.RenderPanel drawPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

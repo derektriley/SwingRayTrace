@@ -19,6 +19,7 @@ public class RenderPanel extends JPanel {
     
     public RenderPanel(int x, int y) {
        image = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
+       this.setSize(x, y);
     }
     
     @Override
