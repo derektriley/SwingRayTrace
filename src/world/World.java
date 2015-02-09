@@ -7,6 +7,7 @@ package world;
 
 import java.awt.Color;
 import java.util.List;
+import math.Ray;
 import objects.GeometricObject;
 import objects.Sphere;
 import tracers.Tracer;
