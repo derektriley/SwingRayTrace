@@ -34,6 +34,7 @@ public class ViewPlane {
     
     public void set_gamma(final float g) {
         this.gamma = g;
+        this.inv_gamma = 1.0f/g;
     }
     
     public void set_gamut_display(final boolean show) {

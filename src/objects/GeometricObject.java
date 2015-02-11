@@ -5,10 +5,29 @@
  */
 package objects;
 
+import math.Ray;
+import utility.RGBColor;
+import utility.ShadeRec;
+
 /**
  *
  * @author Derek
  */
-public class GeometricObject {
+public abstract class GeometricObject {
+    
+    protected RGBColor color;
+    
+    public GeometricObject() {}
+    
+    public abstract boolean hit(Ray ray, double t, ShadeRec s);
+    
+    public void set_color(RGBColor c) {
+        this.color = c;
+    }
+    
+    public void set_color(float r, float g, float b) {
+        color = new RGBColor(r, g, b);
+    }
+    
     
 }

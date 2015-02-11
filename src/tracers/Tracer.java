@@ -5,8 +5,8 @@
  */
 package tracers;
 
-import java.awt.Color;
 import math.Ray;
+import utility.RGBColor;
 import world.World;
 
 /**
@@ -23,8 +23,8 @@ public abstract class Tracer {
          this.world = world;
     }
     
-    public abstract Color trace_ray(final Ray ray);
+    public abstract RGBColor trace_ray(final Ray ray);
     
-    public abstract Color trace_ray(final Ray ray, final int depth);
+    public abstract RGBColor trace_ray(final Ray ray, final int depth);
     
 }

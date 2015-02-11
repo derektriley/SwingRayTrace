@@ -13,6 +13,9 @@ public class RGBColor {
     
     public float r, g, b;
     
+    public static RGBColor black = new RGBColor(0.0f);
+    public static RGBColor white = new RGBColor(1.0f);
+    
     public RGBColor() {}
     
     public RGBColor(float c) {
@@ -25,6 +28,12 @@ public class RGBColor {
         this.r = _r;
         this.g = _g;
         this.b = _b;
+    }
+
+    public RGBColor(RGBColor c) {
+       this.r = c.r;
+       this.g = c.g;
+       this.b = c.b;
     }
     
     public RGBColor add(RGBColor c) {
