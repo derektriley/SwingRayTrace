@@ -7,6 +7,7 @@ package objects;
 
 import math.Normal;
 import math.Point3D;
+import math.Double;
 import math.Ray;
 import math.Vector3D;
 import utility.ShadeRec;
@@ -41,7 +42,7 @@ public class Sphere extends GeometricObject {
     }
     
     @Override
-    public boolean hit(Ray ray, double tmin, ShadeRec sr) {
+    public boolean hit(Ray ray, Double tmin, ShadeRec sr) {
         double t;
         Vector3D temp = ray.o.sub(center);
         double a = ray.d.dot(ray.d);
@@ -57,7 +58,7 @@ public class Sphere extends GeometricObject {
             t = (-b - e) / denom; //smaller root
             
             if (t > kEpsilon) {
-                tmin = t;
+                tmin.d = t;
                 sr.normal = new Normal(temp.add(ray.d.mult(t)));
                 sr.local_hit_point = ray.o.add(ray.d.mult(t));
                 return true;
@@ -66,7 +67,7 @@ public class Sphere extends GeometricObject {
             t = (-b + e) / denom; //larger root
             
             if (t > kEpsilon) {
-                tmin = t;
+                tmin.d = t;
                 sr.normal = new Normal(temp.add(ray.d.mult(t)));
                 sr.local_hit_point = ray.o.add(ray.d.mult(t));
                 return true;

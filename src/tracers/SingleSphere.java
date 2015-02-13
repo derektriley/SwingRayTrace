@@ -6,6 +6,7 @@
 package tracers;
 
 import math.Ray;
+import math.Double;
 import utility.RGBColor;
 import utility.ShadeRec;
 import world.World;
@@ -25,9 +26,11 @@ public class SingleSphere extends Tracer {
     @Override
     public RGBColor trace_ray(Ray ray) {
         ShadeRec sr = new ShadeRec(world_ptr); //not used
-        double t = 0.0d; //not used
+        Double t = new Double(); //not used
         
         if (world_ptr.sphere.hit(ray, t, sr)) {
+            
+        System.out.println("T:  " + t.d);
             return RGBColor.red;
         } else {
             return RGBColor.white;

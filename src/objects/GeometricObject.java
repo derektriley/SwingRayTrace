@@ -6,6 +6,7 @@
 package objects;
 
 import math.Ray;
+import math.Double;
 import utility.RGBColor;
 import utility.ShadeRec;
 
@@ -19,7 +20,7 @@ public abstract class GeometricObject {
     
     public GeometricObject() {}
     
-    public abstract boolean hit(Ray ray, double t, ShadeRec s);
+    public abstract boolean hit(Ray ray, Double t, ShadeRec s);
     
     public void set_color(RGBColor c) {
         this.color = c;
