@@ -5,8 +5,10 @@
  */
 package objects;
 
+import math.Normal;
 import math.Point3D;
 import math.Ray;
+import math.Vector3D;
 import utility.ShadeRec;
 
 /**
@@ -19,6 +21,8 @@ public class Sphere extends GeometricObject {
     private double radius;
     private static final double kEpsilon = 0.0d; //for shadows and secondary rays
 
+    public Sphere() {}
+    
     public Sphere(Point3D center, double r) {
         this.center = center;
         this.radius = r;
@@ -37,8 +41,38 @@ public class Sphere extends GeometricObject {
     }
     
     @Override
-    public boolean hit(Ray ray, double t, ShadeRec s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean hit(Ray ray, double tmin, ShadeRec sr) {
+        double t;
+        Vector3D temp = ray.o.sub(center);
+        double a = ray.d.dot(ray.d);
+        double b = ray.d.dot(temp) * 2.0d;
+        double c = temp.dot(temp) - radius * radius;
+        double disc = b * b - 4.0d * a * c;
+        
+        if (disc < 0.0d) {
+            return false;
+        } else {
+            double e  = Math.sqrt(disc);
+            double denom = 2.0d * a;
+            t = (-b - e) / denom; //smaller root
+            
+            if (t > kEpsilon) {
+                tmin = t;
+                sr.normal = new Normal(temp.add(ray.d.mult(t)));
+                sr.local_hit_point = ray.o.add(ray.d.mult(t));
+                return true;
+            }
+            
+            t = (-b + e) / denom; //larger root
+            
+            if (t > kEpsilon) {
+                tmin = t;
+                sr.normal = new Normal(temp.add(ray.d.mult(t)));
+                sr.local_hit_point = ray.o.add(ray.d.mult(t));
+                return true;
+            }
+        }
+        return false;
     }
     
     

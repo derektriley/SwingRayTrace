@@ -15,6 +15,7 @@ public class RGBColor {
     
     public static RGBColor black = new RGBColor(0.0f);
     public static RGBColor white = new RGBColor(1.0f);
+    public static RGBColor red = new RGBColor(1.0f, 0.0f, 0.0f);
     
     public RGBColor() {}
     

@@ -6,6 +6,7 @@
 package world;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import math.Point3D;
 import math.Ray;
@@ -31,7 +32,11 @@ public class World {
     public List<GeometricObject> objects;
     public RenderPanel paintArea;
     
-    public World() {}
+    public World() {
+        vp = new ViewPlane();
+        sphere = new Sphere();
+        objects = new ArrayList<>();
+    }
     
     public void add_object(GeometricObject object) {
         objects.add(object);
@@ -46,7 +51,8 @@ public class World {
         background_color = RGBColor.white;
         tracer_ptr = new SingleSphere(this);
         
-        
+        sphere.set_center(0.0d, 0.0d, 0.0d);
+        sphere.set_radius(85);
     }
     
     public void render_scene() {
@@ -62,7 +68,7 @@ public class World {
         for (int r  = 0; r < vres; r++) { //up
             for (int c = 0; c <= hres; c++) { //across
                 ray.o = new Point3D(s * (c - hres / 2.0f + 0.5f), s * (r- vres / 2.0f + 0.5), zw);
-                pixel_color = tracer.trace_ray(ray);
+                pixel_color = tracer_ptr.trace_ray(ray);
                 display_pixel(r, c, pixel_color);
             }
         }
