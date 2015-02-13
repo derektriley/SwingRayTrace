@@ -21,8 +21,8 @@ import utility.RenderThread;
  */
 public class UserInterface extends javax.swing.JFrame {
 
-    public static final int IMAGE_WIDTH = 400;
-    public static final int IMAGE_HEIGHT = 400;
+    public static final int IMAGE_WIDTH = 200;
+    public static final int IMAGE_HEIGHT = 200;
     
     
     /**

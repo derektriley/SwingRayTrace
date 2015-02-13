@@ -66,7 +66,7 @@ public class World {
         ray.d = new Vector3D(0.0f, 0.0f, -1.0f);
         
         for (int r  = 0; r < vres; r++) { //up
-            for (int c = 0; c <= hres; c++) { //across
+            for (int c = 0; c < hres; c++) { //across
                 ray.o = new Point3D(s * (c - hres / 2.0f + 0.5f), s * (r- vres / 2.0f + 0.5), zw);
                 pixel_color = tracer_ptr.trace_ray(ray);
                 display_pixel(r, c, pixel_color);
@@ -110,7 +110,11 @@ public class World {
             mapped_color.powc(vp.inv_gamma);
         }
         Color c  = new Color(mapped_color.r, mapped_color.g, mapped_color.b);
-        paintArea.image.setRGB(column, vp.vres - row - 1, c.getRGB());
+        try {
+            paintArea.image.setRGB(column, vp.vres - row - 1, c.getRGB());
+        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+            System.out.println("column: "  + column + " row: " + row);
+        }
         paintArea.repaint();
     }
     
