@@ -43,8 +43,8 @@ public class World {
     }
     
     public void build() {
-        vp.set_hres(200);
-        vp.set_vres(200);
+        vp.set_hres(paintArea.image.getWidth());
+        vp.set_vres(paintArea.image.getHeight());
         vp.set_pixel_size(1.0f);
         vp.set_gamma(1.0f);
         
@@ -75,7 +75,22 @@ public class World {
     }
         
     public void render_scene(int start_x, int start_y) {
+        RGBColor pixel_color;
+        Ray ray = new Ray();
+        int hres = vp.hres;
+        int vres = vp.vres;
+        float s = vp.s;
+        float zw = 100.0f; //hardwired in
         
+        ray.d = new Vector3D(0.0f, 0.0f, -1.0f);
+        
+        for (int r  = start_y; r < start_y + (vres / 4); r++) { //up
+            for (int c = start_x; c < start_x + (hres / 2); c++) { //across
+                ray.o = new Point3D(s * (c - hres / 2.0f + 0.5f), s * (r- vres / 2.0f + 0.5), zw);
+                pixel_color = tracer_ptr.trace_ray(ray);
+                display_pixel(r, c, pixel_color);
+            }
+        }
     }
     
     public RGBColor max_to_one(RGBColor c) {

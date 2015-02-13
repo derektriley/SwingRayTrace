@@ -21,8 +21,8 @@ import utility.RenderThread;
  */
 public class UserInterface extends javax.swing.JFrame {
 
-    public static final int IMAGE_WIDTH = 200;
-    public static final int IMAGE_HEIGHT = 200;
+    public static final int IMAGE_WIDTH = 800;
+    public static final int IMAGE_HEIGHT = 800;
     
     
     /**
@@ -49,6 +49,7 @@ public class UserInterface extends javax.swing.JFrame {
         statusLabel = new javax.swing.JLabel();
         renderTimeLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        multiThreadCheckBox = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -66,11 +67,11 @@ public class UserInterface extends javax.swing.JFrame {
         drawPanel.setLayout(drawPanelLayout);
         drawPanelLayout.setHorizontalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
         );
         drawPanelLayout.setVerticalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 285, Short.MAX_VALUE)
+            .addGap(0, 898, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(drawPanel);
@@ -83,6 +84,8 @@ public class UserInterface extends javax.swing.JFrame {
         renderTimeLabel.setToolTipText("");
 
         jLabel2.setText("Render Time:");
+
+        multiThreadCheckBox.setText("Multi-thread?");
 
         jMenu1.setText("File");
 
@@ -127,14 +130,16 @@ public class UserInterface extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                .addGap(124, 124, 124)
+                .addComponent(multiThreadCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(renderTimeLabel)
@@ -143,7 +148,7 @@ public class UserInterface extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,7 +156,8 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(statusLabel)
                     .addComponent(renderTimeLabel)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(multiThreadCheckBox))
                 .addContainerGap())
         );
 
@@ -164,9 +170,9 @@ public class UserInterface extends javax.swing.JFrame {
 
     private void startRenderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startRenderMenuItemActionPerformed
         
-        Thread t0 = new Thread( new RenderManager(drawPanel, renderTimeLabel));
+        drawPanel.image = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
+        Thread t0 = new Thread( new RenderManager(drawPanel, renderTimeLabel, multiThreadCheckBox.isSelected()));
         t0.start();
-        System.out.println("Rendering");
     }//GEN-LAST:event_startRenderMenuItemActionPerformed
 
     /**
@@ -221,6 +227,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JCheckBox multiThreadCheckBox;
     private javax.swing.JLabel renderTimeLabel;
     private javax.swing.JMenuItem startRenderMenuItem;
     private javax.swing.JLabel statusLabel;

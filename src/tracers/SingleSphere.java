@@ -30,7 +30,7 @@ public class SingleSphere extends Tracer {
         if (world_ptr.sphere.hit(ray, t, sr)) {
             return RGBColor.red;
         } else {
-            return RGBColor.black;
+            return RGBColor.white;
         }
     }
 

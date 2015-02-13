@@ -21,46 +21,48 @@ public class RenderManager implements Runnable {
 
     private final RenderPanel drawPanel;
     private JLabel time;
+    private boolean multi_thread = false;
     
-    public RenderManager(RenderPanel drawPanel, JLabel time) {
+    public RenderManager(RenderPanel drawPanel, JLabel time, boolean multi_thread) {
         this.drawPanel = drawPanel;
         this.time = time;
+        this.multi_thread = multi_thread;
     }
     
     
     @Override
     public void run() {
-        ArrayList<Thread> threads = new ArrayList<>();
-        
-        //8 Threads for my AMD FX-8350
-//        for (int j = 0; j < 2; j++) {
-//            for (int i = 0; i < 4; i++) {
-//                Thread temp = new Thread(new RenderThread((drawPanel.image.getWidth() / 2) * j, (drawPanel.image.getHeight() / 4) * i, drawPanel));
-//                threads.add(temp);
-//            }
-//        }
-        
-
-        long startTime = System.currentTimeMillis();
-        
-//        threads.stream().forEach((t) -> {
-//            t.start();
-//        });
-        
-//        synchronized(threads){
-//            try {
-//                for (Thread t : threads) {
-//                    t.join();
-//                }
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(RenderManager.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
         World w = new World();
-        w.build();
         w.paintArea = drawPanel;
-        w.render_scene();
+        w.build();
         
+        long startTime;
+        if (multi_thread) {
+            ArrayList<Thread> threads = new ArrayList<>();
+            //8 Threads for my AMD FX-8350
+            for (int j = 0; j < 2; j++) {
+                for (int i = 0; i < 4; i++) {
+                    Thread temp = new Thread(new RenderThread((drawPanel.image.getWidth() / 2) * j, (drawPanel.image.getHeight() / 4) * i, drawPanel, w));
+                    threads.add(temp);
+                }
+            }
+            startTime = System.currentTimeMillis();
+            threads.stream().forEach((t) -> {
+                t.start();
+            });
+            synchronized(threads){
+                try {
+                    for (Thread t : threads) {
+                        t.join();
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(RenderManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            startTime = System.currentTimeMillis();
+            w.render_scene();
+        }
         
         long endTime = System.currentTimeMillis();
         float totalTime = (endTime - startTime)/1000.0f;

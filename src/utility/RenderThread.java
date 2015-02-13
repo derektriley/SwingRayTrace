@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import ui.RenderPanel;
+import world.World;
 
 /**
  *
@@ -20,26 +21,18 @@ public class RenderThread implements Runnable {
     private final int start_x;
     private final int start_y;
     private final RenderPanel drawPanel;
+    private World w;
     
-    public RenderThread(int start_x, int start_y, RenderPanel drawPanel) {
+    public RenderThread(int start_x, int start_y, RenderPanel drawPanel, World w) {
         this.start_x = start_x;
         this.start_y = start_y;
         this.drawPanel = drawPanel;
+        this.w = w;
     }
     
     @Override
     public void run() {
-        for (int i = start_y; i < start_y + (drawPanel.image.getHeight() / 4); i++) {
-            for (int j = start_x; j < start_x + (drawPanel.image.getWidth() / 2); j++) {
-                try {
-                    drawPanel.image.setRGB(j, i, com.sun.prism.paint.Color.RED.getIntArgbPre());
-                } catch(java.lang.ArrayIndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                    System.out.println(i + " " + j);
-                }
-                drawPanel.repaint();
-            }
-        }
+        w.render_scene(start_x, start_y);
     }
     
 }
