@@ -10,8 +10,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import utility.RenderManager;
 import utility.RenderThread;
 
@@ -52,6 +57,8 @@ public class UserInterface extends javax.swing.JFrame {
         multiThreadCheckBox = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jpegMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         startRenderMenuItem = new javax.swing.JMenuItem();
@@ -88,6 +95,18 @@ public class UserInterface extends javax.swing.JFrame {
         multiThreadCheckBox.setText("Multi-thread?");
 
         jMenu1.setText("File");
+
+        jMenu4.setText("Export As");
+
+        jpegMenuItem.setText("JPEG");
+        jpegMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpegMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jpegMenuItem);
+
+        jMenu1.add(jMenu4);
 
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +194,30 @@ public class UserInterface extends javax.swing.JFrame {
         t0.start();
     }//GEN-LAST:event_startRenderMenuItemActionPerformed
 
+    private void jpegMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpegMenuItemActionPerformed
+        if (drawPanel.image != null) {
+            JFileChooser fc = new JFileChooser();
+            
+            int returnVal = fc.showSaveDialog(this);
+            
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                file = new File(file.getParentFile(), file.getName() + ".jpeg");
+                statusLabel.setText("Saving...");
+                try {
+                    ImageIO.write(drawPanel.image, "jpeg", file);
+                    statusLabel.setText("Done.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    statusLabel.setText("Failed to save.");
+                }
+            }
+            
+        } else {
+            statusLabel.setText("Image is null.");
+        }
+    }//GEN-LAST:event_jpegMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -221,12 +264,14 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JMenuItem jpegMenuItem;
     private javax.swing.JCheckBox multiThreadCheckBox;
     private javax.swing.JLabel renderTimeLabel;
     private javax.swing.JMenuItem startRenderMenuItem;

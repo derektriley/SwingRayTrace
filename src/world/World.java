@@ -52,7 +52,7 @@ public class World {
         tracer_ptr = new SingleSphere(this);
         
         sphere.set_center(0.0d, 0.0d, 0.0d);
-        sphere.set_radius(85);
+        sphere.set_radius(200);
     }
     
     public void render_scene() {
